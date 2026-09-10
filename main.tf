@@ -7,10 +7,9 @@ data "azurerm_container_registry" "acr" {
   resource_group_name = data.azurerm_resource_group.main.name
 }
 
-resource "azurerm_container_app_environment" "aca_env" {
-  name                = "aca-env-${local.idapp}-${var.environment}"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
+data "azurerm_container_app_environment" "shared" {
+  name                = "cae-saludo-cloud"
+  resource_group_name = "rg-saludo-cloud"
 }
 
 # resource "azurerm_resource_provider_registration" "app" {
@@ -19,8 +18,8 @@ resource "azurerm_container_app_environment" "aca_env" {
 
 resource "azurerm_container_app" "aca" {
   name                         = "aca-ms-${local.idapp}-${var.environment}"
-  container_app_environment_id = azurerm_container_app_environment.aca_env.id
-  resource_group_name          = data.azurerm_resource_group.main.name
+  container_app_environment_id = data.azurerm_container_app_environment.shared.id
+  resource_group_name          = data.azurerm_container_app_environment.shared.resource_group_name
   revision_mode                = "Single"
 
   template {
@@ -54,7 +53,6 @@ resource "azurerm_container_app" "aca" {
       registry
     ]
   }
-  depends_on = [azurerm_container_app_environment.aca_env]
 }
 
 
@@ -78,4 +76,3 @@ resource "azurerm_role_assignment" "aca_pull_default_acr" {
 #   role_definition_name = "AcrPull"
 #   scope                = azurerm_container_registry.acr.id
 # }
-
