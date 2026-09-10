@@ -54,7 +54,7 @@ resource "azurerm_container_app" "aca" {
       registry
     ]
   }
-  depends_on = [ azurerm_container_app_environment.aca_env ]
+  depends_on = [azurerm_container_app_environment.aca_env]
 }
 
 

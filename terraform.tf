@@ -1,5 +1,5 @@
 locals {
-  idapp = "apellido" # Apellido
+  idapp = "jacuna" # Identificador del alumno
 }
 
 terraform {
@@ -13,5 +13,5 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "b497fd69-266c-46a9-b55b-8be0cd579667" # Id de suscripción
+  subscription_id = "edfe8ae6-6538-4820-807d-cf67d0c18369" # Id de suscripción
 }
